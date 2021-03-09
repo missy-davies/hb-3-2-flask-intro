@@ -18,12 +18,17 @@ AWESOMENESS = [
 def start_here():
     """Home page."""
 
-    return "<!doctype html><html><a href='hello'>Hi! This is the home page.</a></html>"
+    return """<!doctype html>
+                <html>
+                    <h1>Hi! This is the home page.</h1>
+                    <a href='hello'>Click here for a compliment.</a><br>
+                    <a href='insult'>Click here for an insult.</a>
+                </html>"""
 
 
 @app.route('/hello')
 def say_hello():
-    """Say hello and prompt for user's name."""
+    """Say hello and prompt for user's name and choose a compliment."""
 
     return """
     <!doctype html>
@@ -35,7 +40,7 @@ def say_hello():
         <h1>Hi There!</h1>
         <form action="/greet">
           What's your name? <input type="text" name="person"><br>
-          Choose a compliment;
+          Choose a compliment:
           <select name = "compliment">
             <option value = "smart">smart</option>
             <option value = "cool">cool</option>
@@ -53,14 +58,14 @@ def greet_person():
     """Get user by name."""
 
     player = request.args.get("person")
-
+   
     compliment = request.args.get("compliment")
 
     return """
     <!doctype html>
     <html>
       <head>
-        <title>A Compliment</title>
+        <title>A Compliment</title> 
       </head>
       <body>
         Hi, {}! I think you're {}!
@@ -68,6 +73,53 @@ def greet_person():
     </html>
     """.format(player, compliment)
 
+
+@app.route('/insult')
+def say_hello_insult():
+    """Say hello and prompt for user's name and choose an insult."""
+
+    return """
+    <!doctype html>
+    <html>
+      <head>
+        <title>Hi There!</title>
+      </head>
+      <body>
+        <h1>Hi There!</h1>
+        <form action="/diss">
+          What's your name? <input type="text" name="person"><br>
+          Choose an insult:
+          <select name = "insult">
+            <option value = "lame">lame</option>
+            <option value = "un-cool">un-cool</option>
+            <option value = "boring">boring</option>
+          </select>  
+          <input type="submit" value="Submit">
+        </form>
+      </body>
+    </html>
+    """
+
+
+@app.route('/diss')
+def diss_person():
+    """Insult user by name."""
+
+    player = request.args.get("person")
+   
+    insult = request.args.get("insult")
+
+    return """
+    <!doctype html>
+    <html>
+      <head>
+        <title>An Insult</title> 
+      </head>
+      <body>
+        Hi, {}! I think you're {}!
+      </body>
+    </html>
+    """.format(player, insult)
 
 if __name__ == '__main__':
     # debug=True gives us error messages in the browser and also "reloads"
